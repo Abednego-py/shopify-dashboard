@@ -8,9 +8,13 @@ dropdown.onclick = () => {
     let elementsArray = Array.from(elements)
     elementsArray.slice(0, 5).forEach(function(element) {
         element.style.display = 'none';
+        element.setAttribute('aria-hidden', 'true')
     })
     dropdown.style.display = 'none'
     dropdown2.style.display = 'block'
+
+    let toggleCont = document.querySelector('#toggle-cont')
+    toggleCont.setAttribute('aria-expanded', 'false')
 };
 
 
@@ -19,19 +23,14 @@ dropdown2.onclick = () => {
   let elements =  document.getElementsByClassName('items-cont')
   let elementsArray = Array.from(elements)
   elementsArray.slice(0, 5).forEach(function(element) {
-    element.style.display = 'block';
+    element.style.display = 'block'
+    element.setAttribute('aria-hidden', 'false')
 })
     dropdown2.style.display = 'none'
     dropdown.style.display = 'block'
 
-    const isExpanded = dropdown2.attributes['aria-expanded'].value
-
-    if(isExpanded){
-        dropdown2.ariaExpanded = false
-    }
-    else {
-        dropdown2.ariaExpanded = true
-    }
+    let toggleCont = document.querySelector('#toggle-cont');
+    toggleCont.setAttribute('aria-expanded', 'true');
 };
 
 // Main items
@@ -39,6 +38,7 @@ dropdown2.onclick = () => {
 
 function showItemBody(key){
    document.getElementsByClassName('item-content')[key].style.display = 'flex'
+   document.getElementsByClassName('item-content')[key].getAttribute('aria-hidden', 'false')
    document.getElementsByClassName('items-cont')[key].style.backgroundColor = '#F3F3F3'
 
    let clickedItem = document.getElementsByClassName('items')[key].nextElementSibling;
@@ -100,31 +100,35 @@ let img3 = document.getElementsByClassName('img-3')
 let img4 = document.getElementsByClassName('img-4')
 let img5 = document.getElementsByClassName('img-5')
 let img6 = document.getElementsByClassName('img-6')
+let imgContainer = document.getElementsByClassName('img-cont')
+
 
 
 function handleChange(key){
-    img1[key].style.display = 'none'
-    img4[key].style.display = 'none'
-    img2[key].style.display = 'block'
+        img1[key].style.display = 'none'
+        img4[key].style.display = 'none'
+        img2[key].style.display = 'block'
+        
+        setTimeout(()=> {
+            img2[key].style.display = 'none'
+            img5[key].style.display = 'block'
+        }, 200)
     
-    setTimeout(()=> {
-        img2[key].style.display = 'none'
-        img5[key].style.display = 'block'
-    }, 200)
+        setTimeout(() => {
+            img5[key].style.display = 'none'
+            img6[key].style.display = 'block'
+        }, 400)
+    
+        setTimeout(() => {
+            img6[key].style.display = 'none'
+            img3[key].style.display = 'block'
+        }, 500)
+    
+        counter.increment()
+        count.innerHTML = counter.getCount().toString()
+        handleProgressBar(counter.getCount())
 
-    setTimeout(() => {
-        img5[key].style.display = 'none'
-        img6[key].style.display = 'block'
-    }, 400)
-
-    setTimeout(() => {
-        img6[key].style.display = 'none'
-        img3[key].style.display = 'block'
-    }, 500)
-
-    counter.increment()
-    count.innerHTML = counter.getCount().toString()
-    handleProgressBar(counter.getCount())
+        imgContainer[key].classList.add('checked')
 }
 
 function reverseChange(key){
@@ -141,6 +145,18 @@ function reverseChange(key){
     counter.decrement()
     count.innerHTML = counter.getCount().toString()
     handleProgressBar(counter.getCount())
+    }
+    imgContainer[key].classList.remove('checked')
+}
+
+function handleCheck(key){
+    if(!imgContainer[key].classList.contains('checked')){
+        handleChange(key)
+        imgContainer[key].setAttribute('aria-label', `Step ${key} completed, uncheck button for step ${key}`)
+    } 
+    else {
+        reverseChange(key)
+        imgContainer[key].setAttribute('aria-label', `check button for step ${key}`)
     }
 }
 
@@ -168,7 +184,7 @@ function handleProgressBar(count){
 
 // alert-bell
 
-let alertBell = document.getElementsByClassName('alert-bell')[0]
+let alertBell = document.getElementsByClassName('image-cont')[0]
 let alert = document.getElementsByClassName('alert')[0]
 let profileModal = document.getElementsByClassName('profile-modal')[0]
 let profileCont = document.getElementsByClassName('profile-cont')[0]
@@ -181,13 +197,15 @@ alertBell.onclick = () => {
     if(!profileModal.classList.contains('active')){
         profileModal.classList.toggle('active')
     }
-    const isExpanded = alertBell.attributes['aria-expanded'].value
+    let imgCont = document.querySelector('#image-cont')
 
-    if(isExpanded){
-        alertBell.ariaExpanded = false
+    if(!alert.classList.contains('active')){
+        imgCont.setAttribute('aria-expanded', 'false')
+        imgCont.setAttribute('aria-hidden', 'false')
     }
     else {
-        alertBell.ariaExpanded = true
+        imgCont.setAttribute('aria-expanded', 'true')
+        imgCont.setAttribute('aria-hidden', 'true')
     }
 }
 // profile modal 
@@ -195,29 +213,26 @@ alertBell.onclick = () => {
 profileCont.onclick = () => {
 
     profileModal.classList.toggle('active')
+
     if(!alert.classList.contains('active')){
         alert.classList.toggle('active')
     }
 
-    const isExpanded = profileCont.attributes['aria-expanded'].value
-    console.log(profileCont.attributes)
-
-    if(isExpanded){
-        profileCont.ariaExpanded = false
+    if(!profileModal.classList.contains('active')){
+        profileCont.setAttribute('aria-expanded', 'false')
+        profileModal.setAttribute('aria-hidden', 'false')
         profileCont.focus()
     }
     else {
-        profileCont.ariaExpanded = true
-        let allMenuItems = document.querySelectorAll('[role="menuitem"]')
-
-        allMenuItems.item(0).focus()
+        profileCont.setAttribute('aria-expanded', 'true')
+        profileModal.setAttribute('aria-hidden', 'true')
     }
 }
 
 profAbbr.onclick = () => {
     profileModal.classList.toggle('active')
     if(!alert.classList.contains('active')){
-        alert.classList.contains('active')
+        alert.classList.toggle('active')
     }
 
     const isExpanded = profAbbr.attributes['aria-expanded'].value
@@ -228,6 +243,14 @@ profAbbr.onclick = () => {
     else {
         profAbbr.ariaExpanded = true
     }
+
+    if(!profileModal.classList.contains('active')){
+        profAbbr.setAttribute('aria-expanded', 'false')
+        profAbbr.focus()
+    }
+    else {
+        profAbbr.setAttribute('aria-expanded', 'true')
+    }
 }
 
 //
@@ -237,12 +260,13 @@ function navigateTo(){
 }
 
 // Keyboard navigation
+//Tab and Shift Tab works fine for keyboard navigation but this is an implementation I tried out.
 
 let keyVal = 0
 let checkCompleted = false
 
 
-let focusableElements = document.querySelectorAll('button, .logo ,.toggle-cont, .toggle-up, .toggle-down, input, #profile-cont, #image-cont, #cancel, .items, .img-cont')
+let focusableElements = document.querySelectorAll('button, .logo ,.toggle-cont, .toggle-up, .toggle-down, input, #profile-cont, #image-cont, #cancel, .items, .img-cont, .prof-abbrv')
 
 let menuItemsElements = document.querySelectorAll('.menu-items')
 
@@ -313,6 +337,12 @@ document.onkeydown = (e) => {
             }   
         }
         if(focusedElement.classList.contains('profile-cont')){
+            profileModal.classList.toggle('active')
+            if(!alert.classList.contains('active')){
+                alert.classList.contains('active')
+            }
+        }
+        if(focusedElement.classList.contains('prof-abbrv')){
             profileModal.classList.toggle('active')
             if(!alert.classList.contains('active')){
                 alert.classList.contains('active')

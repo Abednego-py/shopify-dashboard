@@ -1,3 +1,5 @@
+/** Root **/
+
 *, *::before, *::after{
     margin: 0;
     padding: 0;
@@ -15,23 +17,16 @@ header {
     justify-content: space-between;
 }
 
-
-
-.toggle-cont:hover {
-    background-color: #ebebeb;
-    /* padding: 3px; */
-    border-radius: 6px;
-}
-
 .toggle-cont {
-    margin-left: 5px;
-    width: 2.2em;
-    height: 2em;
     margin-top: 2px;
+    margin-right: 5px;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    align-items: end;
+    border: none;
+    background-color: #fff;
     justify-content: center;
+    height: fit-content;
 }
 
 .shopify-icon {
@@ -79,6 +74,7 @@ header {
     cursor: pointer;
     height: fit-content;
     background-color: #303030;
+    border: none;
     margin-right: 10px;
     margin-top: 5px;
 }
@@ -87,17 +83,18 @@ header {
 .profile-cont {
     display: flex;
     border-radius: 8px;
-    /* padding: 2px 2px 4px 2px; */
+    padding: 2px 2px 4px 2px;
     background-color: #303030;
     height: fit-content;
     margin-top: 5px;
     cursor: pointer;
+    border: none;
 }
 
-.image-cont:hover , .profile-cont:hover {
+.image-cont:hover , .profile-cont:hover, .prof-abbrv:hover {
     background-color: #616161;
 }
-.image-cont:focus , .profile-cont:focus {
+.image-cont:focus , .profile-cont:focus, .prof-abbrv:focus {
 box-shadow: 0px 0px 0px 3px #005BD3;
 }
 .profile-cont .title {
@@ -116,6 +113,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     margin: auto;
     font-size: 0.9em;
     text-align: center;
+    border: none;
     font-weight: 500;
     margin: 3px;
 }
@@ -133,6 +131,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     z-index: 1;
     background-color: #fff;
     border: 1px solid #DBDBDB;
+    box-shadow: 0px 4px 8px 0px #0000000D;
 }
 .active {
     display: none;
@@ -162,7 +161,8 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     background-color: #fff;
     right: 3%;
     width: 320px;
-    z-index: 1;
+    z-index: 2;
+    box-shadow: 0px 4px 8px 0px #0000000D;
 }
 
 .profile-modal a{
@@ -236,8 +236,9 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     top: 5px;
     margin-left: 10px;
     display: inline-flex;
-    color: #fff;
     cursor: pointer;
+    border: 0;
+    background-color: inherit;
 }
 
 .toggle-cancel {
@@ -259,6 +260,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     border-radius: 18px;
     display: block;
     border: 1px solid #DBDBDB;
+    box-shadow:0px 0px 0px 1px  #0000000D;
 }
 
 .row {
@@ -275,6 +277,22 @@ box-shadow: 0px 0px 0px 3px #005BD3;
 
 .toggle-up {
     display: none;
+}
+
+.toggle-up, .toggle-down {
+    border: none;
+    width:30px;
+    height: 30px;
+    background-color: inherit;
+}
+
+.toggle-up:hover, .toggle-down:hover {
+    background-color: #ebebeb;
+    border-radius: 6px;
+} 
+
+.toggle-up:focus, .toggle-down:focus {
+    box-shadow: 0px 0px 0px 3px #005BD3;
 }
 
 .progress-container {
@@ -361,6 +379,13 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     border: #FFFFFF33;
 }
 
+.img-cont {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    z-index: 1;
+}
+
 .img-cont img {
     width: 32px;
     height: 32px;
@@ -374,7 +399,15 @@ box-shadow: 0px 0px 0px 3px #005BD3;
     display: none;
 }
 
+.image-cont:hover + .img-1 {
+    display: none;
+}
+
 .img-1:hover + .img-4 {
+    display: flex;
+}
+
+.image-cont:hover + .img-4 {
     display: flex;
 }
 
@@ -431,7 +464,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
 }
 
 .product-p:hover {
-    background-color: #8a8686;
+    background-color: #ebebeb;
     border-radius: 6px;
     padding: 10px 12px 10px 12px;
     cursor: pointer;
@@ -463,7 +496,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
 }
 
 .menu-items:focus {
-    outline: 2px solid #005BD3;
+    box-shadow: 0px 0px 0px 3px #005BD3;
 }
 
 .focus {
@@ -543,6 +576,7 @@ box-shadow: 0px 0px 0px 3px #005BD3;
        right: 3%;
        text-align: center;
         border: 1px solid #DBDBDB;
+
     }
     .alert-content p {
         color: #303030;
